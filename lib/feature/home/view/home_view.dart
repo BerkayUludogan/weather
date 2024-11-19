@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -6,6 +7,7 @@ import 'package:weather_app/feature/home/state/home_state.dart';
 import 'package:weather_app/feature/home/view_model/home_view_model.dart';
 import 'package:weather_app/product/service/utility/constants/project_lottie.dart';
 
+@RoutePage()
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -14,25 +16,6 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> with HomeViewMixin {
-/*   bool isLoading = false;
-
-  Weather? weather;
-
-  final weatherService = WeatherService(); */
-
-  /* fetchWeather() async {
-    isLoading = true;
-    String cityName = await weatherService.getCurrentCity();
-    try {
-      final weather = await weatherService.getWeather(cityName);
-      setState(() {
-        weatherModel = weather;
-      });
-    } catch (e) {
-      print(e);
-    }
-    isLoading = false;
-  } */
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +31,7 @@ class _HomeViewState extends State<HomeView> with HomeViewMixin {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          state.weather?.cityName ?? 'loading city...',
+                          state.weather?.name ?? 'loading city...',
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -57,14 +40,14 @@ class _HomeViewState extends State<HomeView> with HomeViewMixin {
                         ),
                         Lottie.asset(
                           ProjectLottie.getWeatherAnimation(
-                            state.weather?.mainCondition,
+                            state.weather?.weather?.first.main,
                           ),
                         ),
                         const SizedBox(
                           height: 20,
                         ),
                         Text(
-                          '${state.weather?.temperature?.round()}°C',
+                          '${state.weather?.main?.temp?.round()}°C',
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

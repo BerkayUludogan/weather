@@ -1,8 +1,11 @@
+import 'package:lottie/lottie.dart';
+
 enum ProjectLottie {
   sun('sun'),
   cloud('cloud'),
   rain('rain'),
-  thunder('thunder');
+  thunder('thunder'),
+  splash('splash');
 
   final String value;
 
@@ -27,5 +30,13 @@ enum ProjectLottie {
     }
   }
 
+  LottieBuilder lottieAsset() => Lottie.asset(
+        _path,
+      );
+  /* Lottie.asset(
+          ProjectLottie.splash.value,
+        ) */
   String get _path => 'assets/lottie/$value.json';
 }
+
+extension ProjectLottieExtension on ProjectLottie {}

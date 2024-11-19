@@ -4,31 +4,38 @@ import 'package:geolocator/geolocator.dart';
 import 'package:vexana/vexana.dart';
 import 'package:weather_app/feature/home/state/home_state.dart';
 import 'package:weather_app/product/service/manager/product_network_manager.dart';
-import 'package:weather_app/product/service/model/weather.dart';
+import 'package:weather_app/product/service/model/weather_response.dart';
 import 'package:weather_app/product/service/product_service_path.dart';
 
 final class HomeViewModel extends Cubit<HomeState> {
   HomeViewModel() : super(const HomeState(isLoading: false));
 
-  Weather? weather;
+  WeatherResponse? weather;
 
   Future<void> fetchWeather() async {
     emit(state.copyWith(loading: true));
     try {
       final cityName = await getCurrentCity();
-      print(cityName);
       final manager = ProductNetworkManager.base();
-      final response = await manager.send<Weather, Weather>(
+      final response = await manager.send<WeatherResponse, WeatherResponse>(
         ProductServicePath.weather(cityName),
-        parseModel: Weather(),
+        parseModel: WeatherResponse(),
         method: RequestType.GET,
       );
+      print('Parsed Weather: $weather');
+      print('*' * 50);
+      print(cityName);
+      print('Response: ${response.data}');
+      print('Error: ${response.error}');
+      print('*' * 50);
+      print('Response Status Code: ${response.error?.statusCode}');
+      print('Response Body: ${response.data}');
       if (response.data != null) {
         emit(state.copyWith(weather: response.data));
       }
-      weather = response.data;
+      // weather = response.data;
     } catch (e) {
-      print('HATA :  $e');
+      print('ERROR  :  $e');
     }
   }
 

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:weather_app/product/service/model/weather.dart';
+import 'package:weather_app/product/service/model/weather_response.dart';
 
 @immutable
 final class HomeState extends Equatable {
@@ -10,10 +10,10 @@ final class HomeState extends Equatable {
   });
 
   final bool isLoading;
-  final Weather? weather;
+  final WeatherResponse? weather;
   @override
   List<Object?> get props => [isLoading, weather];
-  HomeState copyWith({bool loading = false, Weather? weather}) {
+  HomeState copyWith({bool loading = false, WeatherResponse? weather}) {
     return HomeState(
       isLoading: loading,
       weather: weather,
